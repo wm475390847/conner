@@ -1,7 +1,7 @@
 package com.sprouts.conner;
 
-import okhttp3.Response;
 import com.sprouts.conner.response.ResponseLog;
+import okhttp3.Response;
 import org.testng.Assert;
 
 /**

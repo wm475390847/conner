@@ -3,8 +3,11 @@ package com.sprouts.conner.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author wangmin
@@ -36,7 +39,7 @@ public class FileUtil {
      * @return byte[]
      */
     public static byte[] getFileBytes(String filePath) {
-        try (InputStream in = new FileInputStream(filePath);
+        try (InputStream in = Files.newInputStream(Paths.get(filePath));
              ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             byte[] b = new byte[1024];
             int len;
@@ -48,5 +51,15 @@ public class FileUtil {
             e.printStackTrace();
         }
         return new byte[0];
+    }
+
+    public static String readJsonFile(String filepath) {
+        try {
+            // 读取 JSON 文件内容到字符串
+            return new String(Files.readAllBytes(Paths.get(filepath)), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

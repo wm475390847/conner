@@ -1,7 +1,6 @@
 package com.sprouts.conner.http;
 
 import com.sprouts.conner.exception.ConnerException;
-import com.sprouts.conner.http.connector.*;
 import lombok.Getter;
 import okhttp3.Response;
 

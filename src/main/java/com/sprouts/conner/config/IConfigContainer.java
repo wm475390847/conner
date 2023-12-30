@@ -1,8 +1,6 @@
 package com.sprouts.conner.config;
 
 
-import com.sprouts.conner.config.IConfig;
-
 /**
  * 配置容器接口
  * <P>用来存放所有的自定义配置

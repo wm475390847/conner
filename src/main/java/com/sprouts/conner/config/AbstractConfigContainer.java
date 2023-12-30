@@ -40,9 +40,7 @@ public abstract class AbstractConfigContainer implements IConfigContainer {
     @Override
     public <C extends IConfig> C findConfig(Class<C> config) {
         Optional.ofNullable(config).orElseThrow(() -> new ConnerException("查询的配置类不能为空"));
-        Map.Entry<String, IConfig> entry = configMap.entrySet().stream()
-                .filter(e -> e.getKey().equals(config.getSimpleName()))
-                .findFirst().orElse(null);
+        Map.Entry<String, IConfig> entry = configMap.entrySet().stream().filter(e -> e.getKey().equals(config.getSimpleName())).findFirst().orElse(null);
         return entry == null ? null : (C) entry.getValue();
     }
 

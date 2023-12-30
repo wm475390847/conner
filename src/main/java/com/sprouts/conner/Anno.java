@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
+ * 注解管理
+ *
  * @author wangmin
  * @date 2022/8/25 14:06
  */
 @Data
 @Accessors(chain = true)
-public class Harbor {
+public class Anno {
 
     /**
      * 配置容器

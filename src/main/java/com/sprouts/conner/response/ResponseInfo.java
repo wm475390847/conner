@@ -17,10 +17,13 @@ import java.io.Serializable;
 public class ResponseInfo implements Serializable {
 
     @JSONField(name = "code")
-    private String code;
+    private int code;
 
     @JSONField(name = "data")
     private Object data;
+
+    @JSONField(name = "result")
+    private Object result;
 
     @JSONField(name = "requestId")
     private String requestId;
@@ -50,6 +53,11 @@ public class ResponseInfo implements Serializable {
      */
     public JSONObject getJsonData() {
         return (JSONObject) this.data;
+    }
+
+
+    public JSONObject getJsonResult() {
+        return (JSONObject) this.result;
     }
 
     /**

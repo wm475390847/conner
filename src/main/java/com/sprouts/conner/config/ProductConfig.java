@@ -36,11 +36,6 @@ public class ProductConfig extends AbstractConfig {
 
     @Override
     public String toString() {
-        return "ProductConfig{" +
-                "caseOwner='" + caseOwner + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productId=" + productId +
-                ", ciJobId=" + ciJobId +
-                '}';
+        return "ProductConfig{" + "caseOwner='" + caseOwner + '\'' + ", productName='" + productName + '\'' + ", productId=" + productId + ", ciJobId=" + ciJobId + '}';
     }
 }

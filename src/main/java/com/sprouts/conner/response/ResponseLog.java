@@ -54,7 +54,7 @@ public class ResponseLog<T> {
      *
      * @return 响应体
      */
-    public ResponseInfo getObjResult() {
+    public ResponseInfo responseInfo() {
         String strResult = getStrResult();
         JSONObject object = JSONObject.parseObject(strResult);
         return JSONObject.toJavaObject(object, ResponseInfo.class);
@@ -66,7 +66,7 @@ public class ResponseLog<T> {
      * @param clazz 指定类型
      * @return 响应体
      */
-    public T getObjResult(Class<T> clazz) {
+    public T responseInfo(Class<T> clazz) {
         String strResult = getStrResult();
         JSONObject object = JSONObject.parseObject(strResult);
         return JSONObject.toJavaObject(object, clazz);

@@ -38,6 +38,16 @@ public class PrioritizingListener implements IAnnotationTransformer {
             priorityMap.put(declaringClass, currentClassPriority);
         }
 
+        StringBuilder concatenatedPriority = getStringBuilder(testPriority, currentClassPriority);
+
+        // Sets the new priority to the test method.
+        annotation.setPriority(Integer.parseInt(concatenatedPriority.toString()));
+
+        String printText = testMethod.getName() + " Priority = " + concatenatedPriority;
+        Reporter.log(printText);
+    }
+
+    private StringBuilder getStringBuilder(int testPriority, Integer currentClassPriority) {
         StringBuilder concatenatedPriority = new StringBuilder(Integer.toString(testPriority));
 
         // Adds 0's to start of this number.
@@ -49,11 +59,6 @@ public class PrioritizingListener implements IAnnotationTransformer {
         // for test with a priority of 1: 1000100001; same test class with a
         // priority of 2: 1000100002; next class with a priority of 1. 1000200001)
         concatenatedPriority.insert(0, currentClassPriority);
-
-        // Sets the new priority to the test method.
-        annotation.setPriority(Integer.parseInt(concatenatedPriority.toString()));
-
-        String printText = testMethod.getName() + " Priority = " + concatenatedPriority;
-        Reporter.log(printText);
+        return concatenatedPriority;
     }
 }

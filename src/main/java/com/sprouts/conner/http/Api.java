@@ -1,18 +1,15 @@
 package com.sprouts.conner.http;
 
-import com.sprouts.conner.response.ResponseLog;
-import org.apache.commons.lang3.StringUtils;
 import com.sprouts.conner.config.HttpConfig;
 import com.sprouts.conner.exception.ConnerException;
-import com.sprouts.conner.http.connector.IConnector;
+import com.sprouts.conner.response.ResponseLog;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Api客户端
@@ -28,9 +25,10 @@ public class Api {
     private static final String SOLIDUS = "/";
     private final Map<String, String> partParams = new HashMap<>();
     private final Map<String, String> urlParams = new HashMap<>();
-    private final Map<String, String> partFiles = new HashMap<>();
+    private final Map<String, String> files = new HashMap<>();
     private final Map<String, String> headers = new HashMap<>();
     private final Map<String, String> sign = new HashMap<>();
+    private final List<PartFile> partFiles;
     private final String contentType;
     private final MethodEnum methodEnum;
     private final Boolean ignoreSsl;
@@ -46,7 +44,8 @@ public class Api {
     public Api(Builder builder) {
         this.partParams.putAll(builder.formDataParts);
         this.urlParams.putAll(builder.urlParamParts);
-        this.partFiles.putAll(builder.fileParts);
+        this.partFiles = builder.partFiles;
+        this.files.putAll(builder.files);
         this.headers.putAll(builder.headers);
         this.sign.putAll(builder.sign);
         this.contentType = builder.contentType;
@@ -184,7 +183,9 @@ public class Api {
     public static class Builder {
         private final Map<String, String> formDataParts = new HashMap<>();
         private final Map<String, String> urlParamParts = new HashMap<>();
-        private final Map<String, String> fileParts = new HashMap<>();
+        private final Map<String, String> files = new HashMap<>();
+
+        private final List<PartFile> partFiles = new ArrayList<>();
         private final Map<String, String> headers = new HashMap<>();
         private final Map<String, String> sign = new HashMap<>();
         private MethodEnum methodEnum;
@@ -223,13 +224,18 @@ public class Api {
             return this;
         }
 
-        public Builder filePart(String key, String filePath) {
-            this.fileParts.put(key, filePath);
+        public Builder filePart(PartFile partFile) {
+            partFiles.add(partFile);
             return this;
         }
 
-        public Builder fileParts(Map<String, String> fileParts) {
-            this.fileParts.putAll(fileParts);
+        public Builder file(String key, String filePath) {
+            this.files.put(key, filePath);
+            return this;
+        }
+
+        public Builder files(Map<String, String> fileParts) {
+            this.files.putAll(fileParts);
             return this;
         }
 

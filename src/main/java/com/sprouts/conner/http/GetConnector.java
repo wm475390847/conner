@@ -1,7 +1,6 @@
-package com.sprouts.conner.http.connector;
+package com.sprouts.conner.http;
 
 import okhttp3.Request;
-import com.sprouts.conner.http.Api;
 
 /**
  * @author wangmin

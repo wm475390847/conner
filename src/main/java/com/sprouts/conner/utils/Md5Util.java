@@ -29,7 +29,7 @@ public class Md5Util {
             md5str = bytesToHex(buff);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("MD5加密错误:" + e.getMessage(), e);
         }
         return md5str;
     }

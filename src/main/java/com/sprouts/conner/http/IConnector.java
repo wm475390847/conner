@@ -1,10 +1,8 @@
-package com.sprouts.conner.http.connector;
+package com.sprouts.conner.http;
 
-import com.sprouts.conner.http.Api;
-import com.sprouts.conner.response.ResponseLog;
 import com.sprouts.conner.config.HttpConfig;
+import com.sprouts.conner.response.ResponseLog;
 import okhttp3.Response;
-
 
 /**
  * @author wangmin

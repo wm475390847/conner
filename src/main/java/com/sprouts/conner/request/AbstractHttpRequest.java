@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.sprouts.conner.config.HttpConfig;
 import com.sprouts.conner.exception.ConnerException;
 import com.sprouts.conner.http.Api;
+import com.sprouts.conner.http.IConnector;
 import com.sprouts.conner.http.MethodEnum;
 import com.sprouts.conner.response.ResponseLog;
-import com.sprouts.conner.http.connector.IConnector;
 import com.sprouts.conner.utils.Property;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
@@ -25,7 +25,7 @@ public abstract class AbstractHttpRequest implements IRequest<Response> {
     /**
      * 获取本地环境配置
      */
-    protected static Properties properties = Property.getInstance().parse();
+    protected static Properties properties = Property.parse();
 
     /**
      * 当前请求体

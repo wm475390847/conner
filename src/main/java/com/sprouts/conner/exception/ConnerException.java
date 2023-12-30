@@ -18,4 +18,8 @@ public class ConnerException extends RuntimeException {
     public ConnerException(String url, String message) {
         super(url + " 请求异常: [" + message + "]");
     }
+
+    public ConnerException(String message, Throwable e) {
+        super(message, e);
+    }
 }

@@ -1,16 +1,14 @@
-package com.sprouts.conner.http.connector;
+package com.sprouts.conner.http;
 
-import org.apache.commons.lang3.StringUtils;
 import com.sprouts.conner.Context;
 import com.sprouts.conner.config.HttpConfig;
 import com.sprouts.conner.exception.ConnerException;
-import com.sprouts.conner.http.Api;
 import com.sprouts.conner.response.ResponseLog;
-import com.sprouts.conner.http.CustomDns;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -73,7 +71,7 @@ public abstract class AbstractConnector implements IConnector<Response> {
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient
                 .Builder()
                 .retryOnConnectionFailure(true)
-                .connectTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(3, TimeUnit.MINUTES)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS);
 
@@ -96,13 +94,10 @@ public abstract class AbstractConnector implements IConnector<Response> {
     @Override
     public ResponseLog<Response> getLog() {
         Optional.ofNullable(response).orElseThrow(() -> new ConnerException("请求响应为空"));
-        Optional.of(response).filter(Response::isSuccessful)
-                .orElseThrow(() -> new ConnerException(api.getUrl(), response.message()));
+        Optional.of(response).filter(Response::isSuccessful).orElseThrow(() -> new ConnerException(api.getUrl(), response.message()));
         ResponseLog<Response> log = new ResponseLog<>();
         Optional.ofNullable(api).orElseThrow(() -> new ConnerException("api为空"));
-        return log.setStartTime(response.sentRequestAtMillis())
-                .setEndTime(response.receivedResponseAtMillis())
-                .setResponse(response).setApi(api);
+        return log.setStartTime(response.sentRequestAtMillis()).setEndTime(response.receivedResponseAtMillis()).setResponse(response).setApi(api);
     }
 
     /**
@@ -126,6 +121,7 @@ public abstract class AbstractConnector implements IConnector<Response> {
      * @param api     Api类
      */
     protected abstract void buildRequest(Request.Builder builder, Api api);
+
 
     /**
      * 是否忽略ssl证书

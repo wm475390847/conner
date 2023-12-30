@@ -1,6 +1,5 @@
-package com.sprouts.conner.http.connector;
+package com.sprouts.conner.http;
 
-import com.sprouts.conner.http.Api;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -9,16 +8,16 @@ import okhttp3.RequestBody;
  * @author wangmin
  * @date 2022/5/17 13:05
  */
-public class PatchConnector extends AbstractConnector {
+public class PostConnector extends AbstractConnector {
     @Override
     protected void buildRequest(Request.Builder builder, Api api) {
         // 解析api类中的contentType
         MediaType mediaType = MediaType.parse(api.getContentType());
 
-        // 发起put请求
+        // 发起post请求
         Object bodyContent = api.getRequestBody();
         RequestBody requestBody = bodyContent == null ? RequestBody.create(mediaType, new byte[0])
                 : RequestBody.create(mediaType, bodyContent.toString());
-        builder.patch(requestBody);
+        builder.post(requestBody);
     }
 }

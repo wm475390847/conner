@@ -1,10 +1,6 @@
 package com.sprouts.conner;
 
-import com.sprouts.conner.config.DingConfig;
-import com.sprouts.conner.config.HttpConfig;
-import com.sprouts.conner.config.IConfig;
-import com.sprouts.conner.config.ProductConfig;
-import com.sprouts.conner.config.IConfigContainer;
+import com.sprouts.conner.config.*;
 import com.sprouts.conner.response.ResponseLog;
 import okhttp3.Response;
 
@@ -19,7 +15,7 @@ import java.util.Map;
  */
 public class Context {
 
-    public static Map<Class<?>, Harbor> map = new LinkedHashMap<>(16);
+    public static Map<Class<?>, Anno> map = new LinkedHashMap<>(16);
 
     /**
      * 当前执行的类
@@ -29,12 +25,7 @@ public class Context {
     /**
      * 默认的调试模式
      */
-    public static String debug;
-
-    /**
-     * 是否是调试模式
-     */
-    public static String isOnDebug;
+    public static boolean debug;
 
     /**
      * 详细信息
@@ -49,15 +40,15 @@ public class Context {
     /**
      * 获取配置
      *
-     * @param configClass 需要获取的配置类型{@link DingConfig}、{@link HttpConfig}、{@link ProductConfig}
+     * @param configClass 需要获取的配置类型{@link AbstractInformConfig}、{@link HttpConfig}、{@link ProductConfig}
      * @return 配置容器
      */
     public static <C extends IConfig> C getConfig(Class<C> configClass) {
-        Harbor harbor = getHarbor();
-        if (harbor == null) {
+        Anno anno = getAnno();
+        if (anno == null) {
             return null;
         }
-        IConfigContainer configContainer = harbor.getConfigContainer();
+        IConfigContainer configContainer = anno.getConfigContainer();
         if (configContainer == null) {
             return null;
         }
@@ -71,20 +62,20 @@ public class Context {
      * @return AbstractCollector
      */
     public static <T> AbstractCollector getCollector() {
-        Harbor harbor = getHarbor();
-        if (harbor == null) {
+        Anno anno = getAnno();
+        if (anno == null) {
             return null;
         }
-        return harbor.getAbstractCollector();
+        return anno.getAbstractCollector();
     }
 
     /**
-     * 获取harbor
+     * 获取注解管理
      *
      * @param <T> 泛型的class
-     * @return Harbor
+     * @return 注解
      */
-    public static <T> Harbor getHarbor() {
+    public static <T> Anno getAnno() {
         if (map.isEmpty()) {
             return null;
         }

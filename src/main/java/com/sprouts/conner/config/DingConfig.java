@@ -1,7 +1,8 @@
 package com.sprouts.conner.config;
 
 import lombok.Getter;
-import com.sprouts.conner.AbstractMessage;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.Arrays;
 
@@ -12,37 +13,38 @@ import java.util.Arrays;
  * @date 2022/5/18 11:27
  */
 @Getter
-public class DingConfig extends AbstractConfig {
+public class DingConfig extends AbstractInformConfig {
 
-    private String webhook;
-    private String keyword;
-    private String[] phones;
-    private boolean isAtAll;
-    private AbstractMessage messageFormat;
+    private final String webhook;
+    private final String keyword;
+    private final String[] phones;
+    private final boolean isAtAll;
 
-    public DingConfig messageFormat(AbstractMessage messageFormat) {
-        this.messageFormat = messageFormat;
-        return this;
+    public DingConfig(Builder builder) {
+        super(builder);
+        this.webhook = builder.webhook;
+        this.phones = builder.phones;
+        this.isAtAll = builder.isAtAll;
+        this.keyword = builder.keyword;
     }
 
-    public DingConfig webhook(String webhook) {
-        this.webhook = webhook;
-        return this;
-    }
+    @Setter
+    @Accessors(chain = true, fluent = true)
+    public static class Builder extends AbstractInformBuilder {
+        private String[] phones;
+        private String webhook;
+        private String keyword;
+        private boolean isAtAll;
 
-    public DingConfig keyword(String keyword) {
-        this.keyword = keyword;
-        return this;
-    }
+        private Builder phones(String... phones) {
+            this.phones = phones.clone();
+            return this;
+        }
 
-    public DingConfig isAtAll(Boolean isAtAll) {
-        this.isAtAll = isAtAll;
-        return this;
-    }
-
-    public DingConfig phones(String... phones) {
-        this.phones = phones.clone();
-        return this;
+        @Override
+        public AbstractInformConfig buildInform() {
+            return new DingConfig(this);
+        }
     }
 
     @Override
@@ -52,7 +54,6 @@ public class DingConfig extends AbstractConfig {
                 ", keyword='" + keyword + '\'' +
                 ", phones=" + Arrays.toString(phones) +
                 ", isAtAll=" + isAtAll +
-                ", messageFormat=" + messageFormat +
                 '}';
     }
 }
